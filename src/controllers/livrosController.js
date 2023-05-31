@@ -22,6 +22,19 @@ class LivroController {
       res.status(500).send({ message: 'Erro ao cadastrar livro.' })
     }
   }
+
+  static atualizarLivro = async (req, res) => {
+    const id = req.params.id
+
+    try {
+      await livros.findByIdAndUpdate(id, { $set: req.body })
+
+      res.status(200).send({ message: 'Livro atualizado com sucesso.' })
+    } catch (err) {
+      console.error(err)
+      res.status(500).send({ message: 'Erro ao atualizar livro.' })
+    }
+  }
 }
 
 export default LivroController

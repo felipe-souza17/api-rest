@@ -22,14 +22,6 @@ app.get('/livros/:id', (req, res) => {
   res.json(livros[index])
 })
 
-app.put('/livros/:id', (req, res) => {
-  const index = buscaLivro(req.params.id)
-
-  livros[index].titulo = req.body.titulo
-
-  res.json(livros)
-})
-
 app.delete('/livros/:id', (req, res) => {
   const { id } = req.params
 

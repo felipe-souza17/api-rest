@@ -16,12 +16,6 @@ app.use(express.json())
 
 routes(app)
 
-app.get('/livros/:id', (req, res) => {
-  const index = buscaLivro(req.params.id)
-
-  res.json(livros[index])
-})
-
 app.delete('/livros/:id', (req, res) => {
   const { id } = req.params
 
@@ -33,11 +27,5 @@ app.delete('/livros/:id', (req, res) => {
 
   res.json(livros)
 })
-
-function buscaLivro(id) {
-  return livros.findIndex(livro => {
-    return livro.id == id
-  })
-}
 
 export default app

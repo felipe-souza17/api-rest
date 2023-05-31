@@ -10,6 +10,19 @@ class LivroController {
     res.status(200).json(livro)
   }
 
+  static listaLivroPorId = async (req, res) => {
+    const id = req.params.id
+
+    try {
+      const livro = await livros.findById(id)
+
+      res.status(200).json(livro)
+    } catch (err) {
+      console.error(err)
+      res.status(500).send({ message: 'Erro ao procurar livro.' })
+    }
+  }
+
   static cadastrarLivro = async (req, res) => {
     let livro = new livros(req.body)
 

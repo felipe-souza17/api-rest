@@ -48,6 +48,18 @@ class LivroController {
       res.status(500).send({ message: 'Erro ao atualizar livro.' })
     }
   }
+
+  static excluirLivro = async (req, res) => {
+    const id = req.params.id
+
+    try {
+      await livros.findByIdAndDelete(id)
+
+      res.status(200).send({ message: 'Livro excluído com sucesso.' })
+    } catch (err) {
+      res.status(500).send({ message: 'Erro ao deletar livro.' })
+    }
+  }
 }
 
 export default LivroController

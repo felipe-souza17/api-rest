@@ -6,7 +6,9 @@ import livros from '../models/livro.js'
 
 class LivroController {
   static listarLivros = async (req, res) => {
-    const livro = await livros.find({})
+    const livro = await livros.find({}).populate('autor', 'nome')
+    // .exec()
+
     res.status(200).json(livro)
   }
 
@@ -14,7 +16,7 @@ class LivroController {
     const id = req.params.id
 
     try {
-      const livro = await livros.findById(id)
+      const livro = await livros.findById(id).populate('autor', 'nome')
 
       res.status(200).json(livro)
     } catch (err) {

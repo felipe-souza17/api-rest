@@ -27,8 +27,8 @@ class LivroController {
     } catch (err) {
       console.error(err);
       res
-        .status(500)
-        .send({ message: "Erro ao procurar livro.", error: err.message });
+        .status(400)
+        .send({ message: "Erro ao procurar livro por ID", error: err.message });
     }
   };
 

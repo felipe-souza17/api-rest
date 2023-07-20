@@ -27,8 +27,8 @@ class AutorController {
     } catch (err) {
       console.error(err);
       res
-        .status(500)
-        .send({ message: "Erro ao procurar autor.", error: err.message });
+        .status(400)
+        .send({ message: "Id do Autor não localizado", error: err.message });
     }
   };
 

@@ -62,6 +62,14 @@ class LivroController {
       res.status(500).send({ message: 'Erro ao deletar livro.' })
     }
   }
+
+  static listarLivroPorEditora = async (req, res) => {
+    const editora = req.query.editora
+
+    const editoraLivro = await livros.find({ editora: editora }, {})
+
+    res.status(200).json(editoraLivro)
+  }
 }
 
 export default LivroController

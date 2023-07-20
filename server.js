@@ -1,4 +1,4 @@
-import app from './src/app.js'
-const port = process.env.PORT
+import app from "./src/app.js";
+const port = process.env.PORT;
 
-app.listen(port, () => console.log(`Servidor escutando rodando!`))
+app.listen(port, () => console.log("Servidor escutando rodando!"));

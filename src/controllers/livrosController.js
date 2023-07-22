@@ -5,19 +5,17 @@ import livros from "../models/livro.js";
  */
 
 class LivroController {
-  static listarLivros = async (req, res) => {
+  static listarLivros = async (req, res, next) => {
     try {
       const livro = await livros.find({}).populate("autor", "nome");
 
       res.status(200).json(livro);
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Erro interno no servidor", error: err.message });
+      next(err);
     }
   };
 
-  static listaLivroPorId = async (req, res) => {
+  static listaLivroPorId = async (req, res, next) => {
     const id = req.params.id;
 
     try {
@@ -25,14 +23,11 @@ class LivroController {
 
       res.status(200).json(livro);
     } catch (err) {
-      console.error(err);
-      res
-        .status(400)
-        .send({ message: "Erro ao procurar livro por ID", error: err.message });
+      next(err);
     }
   };
 
-  static cadastrarLivro = async (req, res) => {
+  static cadastrarLivro = async (req, res, next) => {
     let livro = new livros(req.body);
 
     try {
@@ -40,14 +35,11 @@ class LivroController {
 
       res.status(201).send(livro.toJSON());
     } catch (err) {
-      console.error(err);
-      res
-        .status(500)
-        .send({ message: "Erro ao cadastrar livro.", error: err.message });
+      next(err);
     }
   };
 
-  static atualizarLivro = async (req, res) => {
+  static atualizarLivro = async (req, res, next) => {
     const id = req.params.id;
 
     try {
@@ -55,14 +47,11 @@ class LivroController {
 
       res.status(200).send({ message: "Livro atualizado com sucesso." });
     } catch (err) {
-      console.error(err);
-      res
-        .status(500)
-        .send({ message: "Erro ao atualizar livro.", error: err.message });
+      next(err);
     }
   };
 
-  static excluirLivro = async (req, res) => {
+  static excluirLivro = async (req, res, next) => {
     const id = req.params.id;
 
     try {
@@ -70,22 +59,18 @@ class LivroController {
 
       res.status(200).send({ message: "Livro excluído com sucesso." });
     } catch (err) {
-      res
-        .status(500)
-        .send({ message: "Erro ao deletar livro.", error: err.message });
+      next(err);
     }
   };
 
-  static listarLivroPorEditora = async (req, res) => {
+  static listarLivroPorEditora = async (req, res, next) => {
     const editora = req.query.editora;
     try {
       const editoraLivro = await livros.find({ editora: editora }, {});
 
       res.status(200).json(editoraLivro);
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "Erro interno no servidor", error: err.message });
+      next(err);
     }
   };
 }

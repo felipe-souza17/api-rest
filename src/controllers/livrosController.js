@@ -1,5 +1,5 @@
 import NaoEncontrado from "../errors/NaoEncontrado.js";
-import livros from "../models/livro.js";
+import { livros } from "../models/index.js";
 
 /**
  * - Instância uma classe e um método estático que tem a função/tarefa de listar todos os livros e devolve como resposta eles

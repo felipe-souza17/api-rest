@@ -1,5 +1,5 @@
 import NaoEncontrado from "../errors/NaoEncontrado.js";
-import autores from "../models/autor.js";
+import { autores } from "../models/index.js";
 
 /**
  * - Instância uma classe e um método estático que tem a função/tarefa de listar todos os autores e devolve como resposta eles

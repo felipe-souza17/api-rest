@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ErroBase from "../errors/ErroBase.js";
 
 // eslint-disable-next-line no-unused-vars
 export default function manipularDeErros(erro, req, res, next) {
@@ -15,6 +16,6 @@ export default function manipularDeErros(erro, req, res, next) {
       message: `Os seguintes erros foram encontrados: ${mensagensErro}`
     });
   } else {
-    res.status(500).send({ message: "Erro interno de servidor" });
+    new ErroBase().enviarResposta(res);
   }
 }

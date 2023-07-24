@@ -49,7 +49,7 @@ class LivroController {
 
     try {
       const atualizaLivro = await livros.findByIdAndUpdate(id, {
-        $set: req.body
+        $set: req.body,
       });
 
       if (atualizaLivro !== null) {
@@ -86,10 +86,14 @@ class LivroController {
     }
   };
 
-  static listarLivroPorEditora = async (req, res, next) => {
-    const editora = req.query.editora;
+  static listarLivroPorFiltro = async (req, res, next) => {
+    const { editora, titulo } = req.query;
+    const busca = {};
+
+    if (editora) busca.editora = editora;
+    if (titulo) busca.titulo = titulo;
     try {
-      const editoraLivro = await livros.find({ editora: editora }, {});
+      const editoraLivro = await livros.find(busca, {});
 
       res.status(200).json(editoraLivro);
     } catch (err) {

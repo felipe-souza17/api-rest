@@ -1,5 +1,5 @@
 import NaoEncontrado from "../errors/NaoEncontrado.js";
-import { livros } from "../models/index.js";
+import { autores, livros } from "../models/index.js";
 
 /**
  * - Instância uma classe e um método estático que tem a função/tarefa de listar todos os livros e devolve como resposta eles
@@ -88,9 +88,9 @@ class LivroController {
 
   static listarLivroPorFiltro = async (req, res, next) => {
     try {
-      const busca = processaBusca(req.query);
+      const busca = await processaBusca(req.query);
 
-      const editoraLivro = await livros.find(busca, {});
+      const editoraLivro = await livros.find(busca, {}).populate("autor");
 
       res.status(200).json(editoraLivro);
     } catch (err) {
@@ -99,8 +99,8 @@ class LivroController {
   };
 }
 
-function processaBusca(reqQuery) {
-  const { editora, titulo, minPaginas, maxPaginas } = reqQuery;
+async function processaBusca(reqQuery) {
+  const { editora, titulo, minPaginas, maxPaginas, nomeAutor } = reqQuery;
   const busca = {};
 
   if (editora) busca.editora = editora;
@@ -113,6 +113,14 @@ function processaBusca(reqQuery) {
 
   // lte = Lower Than or Equal = Menor ou igual que
   if (maxPaginas) busca.numeroPaginas.$lte = maxPaginas;
+
+  if (nomeAutor) {
+    const autor = await autores.findOne({ nome: nomeAutor });
+
+    const autorId = autor._id;
+
+    busca.autor = autorId;
+  }
 
   return busca;
 }

@@ -8,9 +8,11 @@ import { autores } from "../models/index.js";
 class AutorController {
   static listarAutores = async (req, res, next) => {
     try {
-      const autoresResultado = await autores.find();
+      const autoresResultado = autores.find();
 
-      res.status(200).json(autoresResultado);
+      req.resultado = autoresResultado;
+
+      next();
     } catch (err) {
       next(err);
     }
@@ -49,7 +51,7 @@ class AutorController {
 
     try {
       const atualizaAutor = await autores.findByIdAndUpdate(id, {
-        $set: req.body
+        $set: req.body,
       });
 
       if (atualizaAutor !== null) {
